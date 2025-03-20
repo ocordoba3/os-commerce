@@ -1,9 +1,14 @@
+"use client";
+
+import useUiStore from "@/store/ui";
 import { PATHS } from "@/utils/paths";
 import Link from "next/link";
 import React from "react";
 import { IoCartOutline, IoMenuOutline, IoSearchOutline } from "react-icons/io5";
 
 const TopMenu = () => {
+  const { setSidebarOpened } = useUiStore();
+
   return (
     <nav
       className="flex justify-around py-4 bg-white/80
@@ -19,7 +24,7 @@ const TopMenu = () => {
       <div className="items-center hidden space-x-8 md:flex">
         <Link
           href={PATHS.category("men")}
-          className="flex text-gray-600 hover:text-blue-500
+          className="flex text-gray-600 hover:text-orange-500
                     cursor-pointer transition-colors duration-300"
         >
           Men
@@ -36,7 +41,7 @@ const TopMenu = () => {
 
         <Link
           href={PATHS.category("kids")}
-          className="flex text-gray-600 hover:text-blue-500
+          className="flex text-gray-600 hover:text-orange-500
                     cursor-pointer transition-colors duration-300"
         >
           Kids
@@ -46,7 +51,7 @@ const TopMenu = () => {
       <div className="flex items-center space-x-5">
         <Link
           href={PATHS.search}
-          className="flex hover:text-blue-500
+          className="flex hover:text-orange-500
                     cursor-pointer transition-colors duration-300"
         >
           <IoSearchOutline color="black" />
@@ -64,9 +69,12 @@ const TopMenu = () => {
           {/* )} */}
         </Link>
 
-        <div className="flex hover:text-blue-500 md:hidden">
+        <button
+          onClick={() => setSidebarOpened()}
+          className="hover:text-orange-500 cursor-pointer"
+        >
           <IoMenuOutline size={28} color="black" />
-        </div>
+        </button>
       </div>
     </nav>
   );

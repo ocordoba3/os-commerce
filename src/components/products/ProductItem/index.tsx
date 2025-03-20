@@ -32,10 +32,10 @@ const ProductItem = ({ product }: Props) => {
         />
       </div>
       <div className="mt-4">
-        <p className="block text-base antialiased font-medium leading-relaxed text-blue-gray-900 !line-clamp-1">
+        <p className="block text-base antialiased font-medium leading-relaxed text-gray-900 !line-clamp-1">
           {product.title}
         </p>
-        <p className="block text-base antialiased font-bold leading-relaxed text-blue-gray-900">
+        <p className="block text-base antialiased font-bold leading-relaxed text-gray-900">
           $ {product.price}
         </p>
       </div>
