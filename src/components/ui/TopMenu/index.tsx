@@ -1,17 +1,24 @@
 "use client";
 
+import { AllowedCategories } from "@/interfaces/category";
 import useUiStore from "@/store/ui";
 import { PATHS } from "@/utils/paths";
+import clsx from "clsx";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { IoCartOutline, IoMenuOutline, IoSearchOutline } from "react-icons/io5";
 
 const TopMenu = () => {
   const { setSidebarOpened } = useUiStore();
+  const pathName = usePathname();
+  const currentCategory = pathName.includes("category")
+    ? pathName.split("/").at(-1)
+    : "";
 
   return (
     <nav
-      className="flex justify-around py-4 bg-white/80
+      className="flex justify-around py-4 bg-white/95
             backdrop-blur-md shadow-md w-full
             fixed top-0 left-0 right-0 z-10 h-16"
     >
@@ -22,30 +29,21 @@ const TopMenu = () => {
       </div>
 
       <div className="items-center hidden space-x-8 md:flex">
-        <Link
-          href={PATHS.category("men")}
-          className="flex text-gray-600 hover:text-orange-500
-                    cursor-pointer transition-colors duration-300"
-        >
-          Men
-        </Link>
-
-        <Link
-          href={PATHS.category("women")}
-          className="flex text-gray-600 
-                    cursor-pointer transition-colors duration-300
-                    font-semibold "
-        >
-          Women
-        </Link>
-
-        <Link
-          href={PATHS.category("kids")}
-          className="flex text-gray-600 hover:text-orange-500
-                    cursor-pointer transition-colors duration-300"
-        >
-          Kids
-        </Link>
+        {AllowedCategories.map((category) => (
+          <Link
+            key={category}
+            href={PATHS.category(category)}
+            className={clsx(
+              "flex text-gray-600 hover:text-orange-500 cursor-pointer transition-colors duration-300 capitalize",
+              {
+                "text-orange-500": currentCategory === category,
+                "font-bold": currentCategory === category,
+              }
+            )}
+          >
+            {category}
+          </Link>
+        ))}
       </div>
 
       <div className="flex items-center space-x-5">
@@ -63,7 +61,7 @@ const TopMenu = () => {
         >
           <IoCartOutline color="black" size={20} />
           {/* {items > 0 && ( */}
-          <span className="absolute top-0 right-0 bg-orange-400 text-white font-bold rounded-full px-1 text-xs">
+          <span className="absolute top-0 right-0 bg-orange-500 text-white font-bold rounded-full px-1 text-xs">
             {/* {items} */}3
           </span>
           {/* )} */}

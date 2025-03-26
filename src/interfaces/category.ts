@@ -1,7 +1,8 @@
 const categories = {
   men: "men",
   women: "women",
-  kids: "kids",
+  kid: "kid",
+  unisex: "unisex",
 } as const;
 
 export const AllowedCategories = Object.values(categories);
