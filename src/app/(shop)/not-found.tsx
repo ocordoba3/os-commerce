@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-const CategoryNotFound = () => {
+const NotFound = () => {
   redirect("/");
 };
 
-export default CategoryNotFound;
+export default NotFound;

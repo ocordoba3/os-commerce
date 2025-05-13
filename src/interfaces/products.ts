@@ -14,5 +14,18 @@ export interface Product {
   //   id: string;
 }
 
-export type SizesType = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
+const SizeValues = {
+  XS: "XS",
+  S: "S",
+  M: "M",
+  L: "L",
+  XL: "XL",
+  XXL: "XXL",
+  XXXL: "XXXL",
+  XXXXL: "XXXXL",
+} as const;
+
+export const SizeOpts = Object.values(SizeValues);
+
+export type SizesType = (typeof SizeOpts)[number];
 export type ValidTypes = "shirts" | "pants" | "hoodies" | "hats";
