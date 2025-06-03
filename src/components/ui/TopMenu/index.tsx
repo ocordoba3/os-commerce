@@ -1,9 +1,9 @@
 "use client";
 
 import { AllowedCategories } from "@/interfaces/category";
+import { cn } from "@/lib/utils";
 import useUiStore from "@/store/ui";
 import { PATHS } from "@/utils/paths";
-import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -33,7 +33,7 @@ const TopMenu = () => {
           <Link
             key={category}
             href={PATHS.category(category)}
-            className={clsx(
+            className={cn(
               "flex text-gray-600 hover:text-orange-500 cursor-pointer transition-colors duration-300 capitalize",
               {
                 "text-orange-500": currentCategory === category,

@@ -75,7 +75,7 @@ const Reviews = () => {
         <p className="sr-only">4 out of 5 stars</p>
         <a
           href="#"
-          className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
+          className="ml-3 text-sm font-medium text-orange-600 hover:text-orange-500"
         >
           117 reviews
         </a>

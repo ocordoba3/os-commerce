@@ -1,8 +1,8 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import useUiStore from "@/store/ui";
 import { PATHS } from "@/utils/paths";
-import clsx from "clsx";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import {
@@ -46,7 +46,7 @@ const Sidebar = () => {
       )}
 
       <div
-        className={clsx(
+        className={cn(
           "fixed top-0 z-30 h-screen right-0 w-1/3 bg-white transform transition-all duration-300 shadow-md",
           {
             "translate-x-full": !sidebarOpened,

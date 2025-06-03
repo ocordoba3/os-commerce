@@ -1,5 +1,7 @@
 import Breadcrumb from "@/components/products/Breadcrumb";
+import QuantitySelector from "@/components/products/QuantitySelector";
 import Reviews from "@/components/products/Reviews";
+import SizeSelector from "@/components/products/SizeSelector";
 import { Button } from "@/components/ui/Button";
 import {
   Carousel,
@@ -8,9 +10,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/Carousel";
-import { SizeOpts } from "@/interfaces/products";
 import { initialProducts } from "@/utils/seed";
-import clsx from "clsx";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -68,73 +68,8 @@ const ProductByIdPage = async ({ params }: Props) => {
           <p className="text-5xl tracking-tight text-gray-900">
             ${product.price}
           </p>
-
-          <div className="my-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-gray-900">Size</h3>
-              <a
-                href="#"
-                className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Size guide
-              </a>
-            </div>
-
-            <fieldset aria-label="Choose a size" className="mt-4">
-              <div className="grid grid-cols-4 gap-4">
-                {SizeOpts.map((size) => {
-                  const isAllowedSize = product.sizes.includes(size);
-                  return (
-                    <div key={size}>
-                      <label
-                        className={clsx(
-                          "group relative flex place-content-center rounded-md border p-2 text-sm font-medium uppercase",
-                          {
-                            "bg-gray-50": !isAllowedSize,
-                            "cursor-not-allowed": !isAllowedSize,
-                            "text-gray-200": !isAllowedSize,
-                            "hover:bg-gray-100": isAllowedSize,
-                            "cursor-pointer": isAllowedSize,
-                          }
-                        )}
-                      >
-                        <input
-                          type="radio"
-                          name="size-choice"
-                          value={size}
-                          disabled
-                          className="sr-only"
-                        />
-                        <span>{size}</span>
-                        {!isAllowedSize && (
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                          >
-                            <svg
-                              className="absolute inset-0 size-full stroke-2 text-gray-200"
-                              viewBox="0 0 100 100"
-                              preserveAspectRatio="none"
-                              stroke="currentColor"
-                            >
-                              <line
-                                x1="0"
-                                y1="100"
-                                x2="100"
-                                y2="0"
-                                vectorEffect="non-scaling-stroke"
-                              />
-                            </svg>
-                          </span>
-                        )}
-                      </label>
-                    </div>
-                  );
-                })}
-              </div>
-            </fieldset>
-          </div>
-
+          <QuantitySelector productId={product.slug} />
+          <SizeSelector productId={product.slug} productSizes={product.sizes} />
           <Button>Add to cart</Button>
         </div>
       </div>
