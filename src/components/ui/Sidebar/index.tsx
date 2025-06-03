@@ -47,7 +47,7 @@ const Sidebar = () => {
 
       <div
         className={cn(
-          "fixed top-0 z-30 h-screen right-0 w-1/3 bg-white transform transition-all duration-300 shadow-md",
+          "fixed top-0 z-30 h-screen right-0 w-full sm:w-1/2 md:w-1/3 bg-white transform transition-all duration-300 shadow-md",
           {
             "translate-x-full": !sidebarOpened,
           }

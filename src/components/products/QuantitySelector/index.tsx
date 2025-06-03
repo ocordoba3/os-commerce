@@ -2,7 +2,10 @@
 
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { cn } from "@/lib/utils";
+import { PATHS } from "@/utils/paths";
 import { MinusIcon, PlusIcon } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 interface Props {
@@ -11,6 +14,8 @@ interface Props {
 
 const QuantitySelector = ({}: Props) => {
   const [quantity, setQuantity] = useState(0);
+  const pathName = usePathname();
+  const isCartView = pathName === PATHS.cart;
 
   function handleChange(value: number) {
     if ((value === -1 && quantity <= 1) || (value === 1 && quantity === 5)) {
@@ -19,12 +24,23 @@ const QuantitySelector = ({}: Props) => {
     setQuantity((prev) => prev + value);
   }
   return (
-    <div className="my-4 w-full">
+    <div
+      className={cn("w-full", {
+        flex: isCartView,
+        "gap-4": isCartView,
+        "items-center": isCartView,
+        "my-4": !isCartView,
+      })}
+    >
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-medium text-gray-900">Quantity</h3>
       </div>
 
-      <div className="grid grid-cols-[auto_4rem_auto] gap-2 w-fit mt-4">
+      <div
+        className={cn("grid grid-cols-[auto_4rem_auto] gap-2 w-fit", {
+          "mt-4": !isCartView,
+        })}
+      >
         <Button onClick={() => handleChange(-1)}>
           <MinusIcon />
         </Button>
