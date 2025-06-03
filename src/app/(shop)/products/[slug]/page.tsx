@@ -24,20 +24,20 @@ const ProductByIdPage = async ({ params }: Props) => {
   const product = await initialProducts.find(
     (product) => product.slug === slug
   );
-  console.log(product);
+
   if (!product) {
     notFound();
   }
 
   return (
-    <div className="bg-white p-6 flex flex-wrap">
+    <div className="bg-white flex flex-wrap">
       <Breadcrumb gender={product.gender} type={product.type} />
 
-      <div className="w-full md:w-3/5 pt-8 pr-4 flex justify-center">
-        <Carousel className="w-[85%] flex justify-center">
+      <div className="w-full md:w-3/5 pt-8 flex justify-center">
+        <Carousel className="w-full flex justify-center">
           <CarouselContent>
             {product.images.map((image, idx) => (
-              <CarouselItem key={idx}>
+              <CarouselItem className="p-0 flex justify-center" key={idx}>
                 <Image
                   key={idx}
                   src={`/products/${image}`}
@@ -49,12 +49,12 @@ const ProductByIdPage = async ({ params }: Props) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="left-4" />
+          <CarouselNext className="right-4" />
         </Carousel>
       </div>
 
-      <div className="w-full md:w-2/5 pt-8">
+      <div className="w-full md:w-2/5 pt-8 md:pl-8">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
           {product.title}
         </h1>

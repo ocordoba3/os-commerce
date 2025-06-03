@@ -11,7 +11,7 @@ interface Props {
 const ProductItem = ({ product }: Props) => {
   return (
     <Link
-      className="flex flex-col text-gray-700 bg-clip-border w-80 min-h-96 place-self-center"
+      className="flex flex-col text-gray-700 bg-clip-border w-full h-96 place-self-center"
       href={PATHS.product(product.slug)}
     >
       <div className="group">

@@ -13,7 +13,7 @@ const QuantitySelector = ({}: Props) => {
   const [quantity, setQuantity] = useState(0);
 
   function handleChange(value: number) {
-    if ((value === -1 && quantity === 0) || (value === 1 && quantity === 5)) {
+    if ((value === -1 && quantity <= 1) || (value === 1 && quantity === 5)) {
       return;
     }
     setQuantity((prev) => prev + value);

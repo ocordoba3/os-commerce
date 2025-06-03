@@ -4,7 +4,7 @@ import React, { ReactNode } from "react";
 
 const ShopLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <main className="min-h-screen bg-white/95 mt-16 p-8">
+    <main className="bg-white/95 mt-16 p-8">
       <TopMenu />
       <Sidebar />
       {children}
