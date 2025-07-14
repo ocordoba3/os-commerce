@@ -18,9 +18,9 @@ const TopMenu = () => {
 
   return (
     <nav
-      className="flex justify-around py-4 bg-white/95
+      className="flex justify-between py-4 bg-white/95
             backdrop-blur-md shadow-md w-full
-            fixed top-0 left-0 right-0 z-10 h-16"
+            fixed top-0 left-0 right-0 z-10 h-16 px-8 md:px-28 2xl:px-[22rem]"
     >
       <div className="flex items-center">
         <Link href="/" className="cursor-pointer text-2xl text-black font-bold">

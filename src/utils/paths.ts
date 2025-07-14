@@ -5,4 +5,6 @@ export const PATHS = {
   product: (slug: string) => `/products/${slug}`,
   cart: "/cart",
   search: "/search",
+  checkout: "/checkout",
+  orders: (id: string) => `/checkout/${id}`,
 };

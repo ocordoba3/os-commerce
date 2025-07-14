@@ -1,6 +1,6 @@
 import CartProductsGrid from "@/components/cart/CartProductsGrid";
-import { Button } from "@/components/ui/Button";
 import Title from "@/components/ui/Title";
+import { PATHS } from "@/utils/paths";
 import { initialProducts } from "@/utils/seed";
 import { ForwardIcon } from "lucide-react";
 import Link from "next/link";
@@ -10,7 +10,7 @@ const CartPage = () => {
   return (
     <div>
       <Title title="Cart" subtitle="Check all your products" />
-      <div className="w-full flex justify-end my-2">
+      <div className="w-full flex justify-end my-2 px-0 md:px-20 2xl:px-80">
         <Link
           href="/"
           className="text-orange-600 hover:text-orange-700 transition-all flex"
@@ -18,7 +18,7 @@ const CartPage = () => {
           Continue shopping <ForwardIcon className="ml-2" />
         </Link>
       </div>
-      <section className="grid md:grid-cols-[65%_auto] gap-8 max-w-full">
+      <section className="grid md:grid-cols-[65%_auto] gap-8 max-w-full px-0 md:px-20 2xl:px-80">
         <CartProductsGrid products={[initialProducts[0], initialProducts[2]]} />
 
         <article className="w-full bg-orange-100 p-8 shadow-md box-border">
@@ -43,7 +43,12 @@ const CartPage = () => {
 
           <div className="w-full border border-gray-300 my-8"></div>
 
-          <Button>Checkout</Button>
+          <Link
+            href={PATHS.checkout}
+            className="bg-black text-white hover:bg-black/90 transition-all flex cursor-pointer rounded-md text-sm font-medium px-4 py-2 justify-center"
+          >
+            Go to pay
+          </Link>
         </article>
       </section>
     </div>

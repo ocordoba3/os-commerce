@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/Input";
-import Title from "@/components/ui/Title";
 import { z } from "zod";
 import {
   Form,
@@ -13,12 +12,13 @@ import {
   FormMessage,
 } from "@/components/ui/Form";
 import { Button } from "@/components/ui/Button";
+import { PATHS } from "@/utils/paths";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+  full_name: z.string().min(5, {
+    message: "Full Name must be at least 5 characters.",
   }),
-  last_name: z.string(),
   address: z.string().min(1, {
     message: "Required Field",
   }),
@@ -33,17 +33,18 @@ const formSchema = z.object({
   phone: z.string(),
 });
 
-const AddressPage = () => {
+const AddressForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      last_name: "",
+      full_name: "",
       address: "",
       complement_address: "",
       postal_code: "",
       country: "",
       city: "",
+      phone: "",
     },
     mode: "onChange",
   });
@@ -52,41 +53,28 @@ const AddressPage = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    router.replace(PATHS.checkout);
   }
 
   console.log(form.formState.errors);
 
   return (
-    <div className="flex flex-col sm:justify-center sm:items-center">
-      <div className="w-full  xl:w-[1000px] flex flex-col justify-center text-left">
-        <Title title="Address" subtitle="Set your delivery address" />
+    <div className="flex flex-col sm:justify-center sm:items-center md:px-8">
+      <div className="w-full flex flex-col justify-center text-left">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-wrap w-full"
           >
-            <div className="grid grid-cols-1 gap-2 md:gap-8 md:grid-cols-2 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
               <FormField
                 control={form.control}
-                name="name"
+                name="full_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="last_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Last Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Doe" {...field} />
+                      <Input placeholder="John Doe" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -172,9 +160,13 @@ const AddressPage = () => {
               />
             </div>
 
-            <div className="flex mt-8 w-full justify-end">
-              <Button className="w-fit" type="submit">
-                Continue to Checkout
+            <div className="flex mt-8 w-full md:w-1/2">
+              <Button
+                disabled={!form.formState.isValid}
+                className="w-full"
+                type="submit"
+              >
+                Place Order
               </Button>
             </div>
           </form>
@@ -184,4 +176,4 @@ const AddressPage = () => {
   );
 };
 
-export default AddressPage;
+export default AddressForm;

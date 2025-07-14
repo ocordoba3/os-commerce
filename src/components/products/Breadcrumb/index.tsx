@@ -23,7 +23,7 @@ const Breadcrumb = ({ gender, type }: Props) => {
           </div>
         </li>
         <li>
-          <div className="flex items-center font-medium text-gray-500 hover:text-gray-600 capitalize">
+          <div className="flex items-center font-medium text-gray-500 capitalize">
             {type}
           </div>
         </li>

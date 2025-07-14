@@ -30,7 +30,7 @@ const ProductByIdPage = async ({ params }: Props) => {
   }
 
   return (
-    <div className="bg-white flex flex-wrap">
+    <div className="bg-white flex flex-wrap px-0 md:px-20 2xl:px-80">
       <Breadcrumb gender={product.gender} type={product.type} />
 
       <div className="w-full md:w-3/5 pt-8 flex justify-center">

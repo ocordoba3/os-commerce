@@ -1,8 +1,11 @@
+"use client";
+
 import QuantitySelector from "@/components/products/QuantitySelector";
 import { Product } from "@/interfaces/products";
 import { PATHS } from "@/utils/paths";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 interface Props {
@@ -10,36 +13,39 @@ interface Props {
 }
 
 const CartProductItem = ({ product }: Props) => {
+  const path = usePathname();
+  const isCartView = path === PATHS.cart;
+
   return (
-    <section className="flex flex-wrap justify-center md:flex-nowrap text-gray-700 bg-clip-border w-full place-self-center gap-8 bg-gray-50 p-4">
-      <div className="w-[10rem]">
-        <Link href={PATHS.product(product.slug)}>
-          <Image
-            quality={100}
-            width={160}
-            height={160}
-            src={`/products/${product.images[0]}`}
-            alt={product.title}
-            className="object-cover fadeIn transition-all w-full"
-          />
-        </Link>
-      </div>
-      <div className="w-full h-auto grid gap-0">
-        <div className="flex justify-between text-xl text-gray-900">
-          <h2 className="w-4/5 antialiased leading-relaxed !line-clamp-1">
-            {product.title}
-          </h2>
-          <span className="w-auto">${product.price}</span>
-        </div>
+    <section className="w-full grid grid-cols-1 lg:grid-cols-[30%_70%] text-gray-700 bg-clip-border items-center bg-gray-50">
+      <Link href={PATHS.product(product.slug)}>
+        <Image
+          quality={100}
+          width={160}
+          height={160}
+          src={`/products/${product.images[0]}`}
+          alt={product.title}
+          className="object-cover fadeIn transition-all w-full"
+        />
+      </Link>
+      <div className="w-full h-auto grid gap-0 p-2 lg:p-4">
+        <h2 className=" antialiased leading-relaxed !line-clamp-1">
+          {product.title}
+        </h2>
+        <p className="w-full text-sm text-gray-900 h-fit">
+          Price: <b className="font-lg">${product.price}</b>
+        </p>
         <p className="w-full text-sm text-gray-900 h-fit">
           Size: <b className="font-lg">M</b>
         </p>
 
         <QuantitySelector productId={product.slug} />
 
-        <p className="w-full text-sm text-gray-600 underline cursor-pointer self-end h-fit">
-          Remove
-        </p>
+        {isCartView && (
+          <p className="w-full text-sm text-gray-600 underline cursor-pointer self-end h-fit">
+            Remove
+          </p>
+        )}
       </div>
     </section>
   );
