@@ -6,5 +6,6 @@ export const PATHS = {
   cart: "/cart",
   search: "/search",
   checkout: "/checkout",
-  orders: (id: string) => `/checkout/${id}`,
+  orders: "/orders",
+  ordersById: (id: string) => `/orders/${id}`,
 };

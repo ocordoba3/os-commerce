@@ -14,7 +14,7 @@ interface Props {
 const QuantitySelector = ({}: Props) => {
   const [quantity, setQuantity] = useState(1);
   const pathName = usePathname();
-  const isCheckoutView = pathName === PATHS.checkout;
+  const isCartView = pathName === PATHS.cart;
 
   function handleChange(value: number) {
     if ((value === -1 && quantity === 1) || (value === 1 && quantity === 5)) {
@@ -26,29 +26,29 @@ const QuantitySelector = ({}: Props) => {
   return (
     <div
       className={cn("w-full", {
-        flex: !isCheckoutView,
-        "gap-4": !isCheckoutView,
-        "items-center": !isCheckoutView,
-        "my-4": !isCheckoutView,
+        flex: isCartView,
+        "gap-4": isCartView,
+        "items-center": isCartView,
+        "my-4": isCartView,
       })}
     >
       <div className="flex items-center">
         <h3 className="text-sm font-medium text-gray-900 w-fit">Quantity</h3>
-        {isCheckoutView && (
+        {!isCartView && (
           <>
             : <span className="ml-2 font-bold">{quantity}</span>
           </>
         )}
       </div>
 
-      {!isCheckoutView && (
+      {isCartView && (
         <div
           className={cn(
             "gap-2 w-fit items-center bg-white border border-gray-300 rounded-md px-2",
             {
-              "mt-4": isCheckoutView,
-              grid: !isCheckoutView,
-              "grid-cols-[auto_auto_auto]": !isCheckoutView,
+              "mt-4": !isCartView,
+              grid: isCartView,
+              "grid-cols-[auto_auto_auto]": isCartView,
             }
           )}
         >
