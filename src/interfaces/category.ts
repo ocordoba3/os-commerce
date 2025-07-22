@@ -1,10 +1,10 @@
-const categories = {
+const genders = {
   men: "men",
   women: "women",
   kid: "kid",
   unisex: "unisex",
 } as const;
 
-export const AllowedCategories = Object.values(categories);
+export const AllowedGenders = Object.values(genders);
 
-export type CategoriesType = (typeof AllowedCategories)[number];
+export type GenderType = (typeof AllowedGenders)[number];

@@ -1,6 +1,6 @@
 "use client";
 
-import { AllowedCategories } from "@/interfaces/category";
+import { AllowedGenders } from "@/interfaces/category";
 import { cn } from "@/lib/utils";
 import useUiStore from "@/store/ui";
 import { PATHS } from "@/utils/paths";
@@ -29,7 +29,7 @@ const TopMenu = () => {
       </div>
 
       <div className="items-center hidden space-x-8 md:flex">
-        {AllowedCategories.map((category) => (
+        {AllowedGenders.map((category) => (
           <Link
             key={category}
             href={PATHS.category(category)}

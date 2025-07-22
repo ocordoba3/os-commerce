@@ -3,7 +3,7 @@ import CheckoutAccordion from "@/components/checkout/CheckoutAccordion";
 
 import Title from "@/components/ui/Title";
 import { PATHS } from "@/utils/paths";
-import { initialProducts } from "@/utils/seed";
+import { initialProducts } from "@/seed/seed";
 import { ForwardIcon } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -27,7 +27,9 @@ const CheckoutPage = () => {
       </div>
       <section className="flex flex-wrap sm:flex-nowrap gap-8 w-full px-0 md:px-20 2xl:px-80">
         <CheckoutAccordion />
-        <CartProductsGrid products={[initialProducts[0], initialProducts[2]]} />
+        <CartProductsGrid
+          products={[initialProducts.products[0], initialProducts.products[2]]}
+        />
       </section>
     </>
   );

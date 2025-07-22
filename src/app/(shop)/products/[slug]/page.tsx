@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/Carousel";
-import { initialProducts } from "@/utils/seed";
+import { initialProducts } from "@/seed/seed";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -21,7 +21,7 @@ interface Props {
 
 const ProductByIdPage = async ({ params }: Props) => {
   const { slug } = await params;
-  const product = await initialProducts.find(
+  const product = await initialProducts.products.find(
     (product) => product.slug === slug
   );
 
@@ -31,7 +31,7 @@ const ProductByIdPage = async ({ params }: Props) => {
 
   return (
     <div className="bg-white flex flex-wrap px-0 md:px-20 2xl:px-80">
-      <Breadcrumb gender={product.gender} type={product.type} />
+      <Breadcrumb gender={product.gender} type={product.category} />
 
       <div className="w-full md:w-3/5 pt-8 flex justify-center">
         <Carousel className="w-full flex justify-center">

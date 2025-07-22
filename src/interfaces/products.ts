@@ -1,7 +1,14 @@
-import { CategoriesType } from "./category";
+import { GenderType } from "./category";
+
+export interface SeedData {
+  categories: ValidCategories[];
+  products: Product[];
+}
 
 export interface Product {
+  category: ValidCategories;
   description: string;
+  gender: GenderType;
   images: string[];
   inStock: number;
   price: number;
@@ -9,8 +16,6 @@ export interface Product {
   slug: string;
   tags: string[];
   title: string;
-  type: ValidTypes;
-  gender: CategoriesType;
   //   id: string;
 }
 
@@ -28,4 +33,4 @@ const SizeValues = {
 export const SizeOpts = Object.values(SizeValues);
 
 export type SizesType = (typeof SizeOpts)[number];
-export type ValidTypes = "shirts" | "pants" | "hoodies" | "hats";
+export type ValidCategories = "shirts" | "pants" | "hoodies" | "hats";

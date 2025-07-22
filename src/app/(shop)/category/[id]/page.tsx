@@ -1,22 +1,24 @@
 import ProductsGrid from "@/components/products/ProductsGrid";
 import Title from "@/components/ui/Title";
-import { AllowedCategories, CategoriesType } from "@/interfaces/category";
-import { initialProducts } from "@/utils/seed";
+import { AllowedGenders, GenderType } from "@/interfaces/category";
+import { initialProducts } from "@/seed/seed";
 import { notFound } from "next/navigation";
 import React from "react";
 
 interface Props {
-  params: { id: CategoriesType };
+  params: { id: GenderType };
 }
 
 const CategoryById = async ({ params }: Props) => {
   const { id } = await params;
 
-  if (!AllowedCategories.includes(id)) {
+  if (!AllowedGenders.includes(id)) {
     notFound();
   }
 
-  const products = initialProducts.filter((product) => product.gender === id);
+  const products = initialProducts.products.filter(
+    (product) => product.gender === id
+  );
 
   return (
     <div>
