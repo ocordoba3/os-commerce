@@ -1,4 +1,5 @@
 import ProductsGrid from "@/components/products/ProductsGrid";
+import Pagination from "@/components/ui/Pagination";
 import Title from "@/components/ui/Title";
 import { AllowedGenders, GenderType } from "@/interfaces/category";
 import { initialProducts } from "@/seed/seed";
@@ -24,6 +25,7 @@ const CategoryById = async ({ params }: Props) => {
     <div>
       <Title title={id} subtitle={`Check all the ${id} products`} />
       <ProductsGrid products={products} />
+      <Pagination totalPages={5} />
     </div>
   );
 };
