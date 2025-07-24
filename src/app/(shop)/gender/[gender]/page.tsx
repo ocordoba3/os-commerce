@@ -1,3 +1,5 @@
+export const revalidate = 360;
+
 import { getProductsList } from "@/actions/products/products-list";
 import ProductsGrid from "@/components/products/ProductsGrid";
 import Pagination from "@/components/ui/Pagination";
