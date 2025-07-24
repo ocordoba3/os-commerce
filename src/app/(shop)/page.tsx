@@ -7,10 +7,10 @@ import Title from "@/components/ui/Title";
 import { redirect } from "next/navigation";
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     page?: string;
     limit?: string;
-  };
+  }>;
 }
 
 export default async function ShopPage({ searchParams }: Props) {

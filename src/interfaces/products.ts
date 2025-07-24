@@ -16,7 +16,7 @@ export interface Product {
   slug: string;
   tags: string[];
   title: string;
-  id: string;
+  id?: string;
 }
 
 export type ValidCategories = "shirts" | "pants" | "hoodies" | "hats";

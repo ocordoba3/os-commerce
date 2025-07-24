@@ -16,7 +16,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 const ProductByIdPage = async ({ params }: Props) => {

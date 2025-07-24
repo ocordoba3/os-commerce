@@ -9,11 +9,11 @@ import { genders } from "@/utils/consts";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: { gender: Gender };
-  searchParams: {
+  params: Promise<{ gender: Gender }>;
+  searchParams: Promise<{
     page?: string;
     limit?: string;
-  };
+  }>;
 }
 
 const GenderByName = async ({ params, searchParams }: Props) => {
