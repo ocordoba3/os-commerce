@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { redirect, usePathname, useSearchParams } from "next/navigation";
 
 interface Props {
   totalPages: number;
@@ -13,6 +13,11 @@ const Pagination = ({ totalPages }: Props) => {
   const path = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page") || 1);
+
+  if (isNaN(currentPage)) {
+    redirect(path);
+  }
+
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 

@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma";
 export async function getProductsList({
   page = "1",
   limit = "12",
+  gender,
 }: Pagination) {
   let initialPage = Number(page);
   let initialLimit = Number(limit);
@@ -20,7 +21,7 @@ export async function getProductsList({
 
   try {
     // 1. Get products total
-    const count = await prisma.product.count({});
+    const count = await prisma.product.count({ where: { gender } });
 
     // 2. Get paginated products
     const products = await prisma.product.findMany({
@@ -33,6 +34,9 @@ export async function getProductsList({
             url: true,
           },
         },
+      },
+      where: {
+        gender,
       },
     });
     const mappedProducts: Product[] = products.map(

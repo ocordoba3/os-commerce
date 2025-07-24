@@ -1,31 +1,38 @@
+import { getProductsList } from "@/actions/products/products-list";
 import ProductsGrid from "@/components/products/ProductsGrid";
 import Pagination from "@/components/ui/Pagination";
 import Title from "@/components/ui/Title";
-import { AllowedGenders, GenderType } from "@/interfaces/category";
-import { initialProducts } from "@/seed/seed";
+import { Gender } from "@/generated/prisma";
 import { notFound } from "next/navigation";
-import React from "react";
 
 interface Props {
-  params: { id: GenderType };
+  params: { id: Gender };
+  searchParams: {
+    page?: string;
+    limit?: string;
+  };
 }
 
-const CategoryById = async ({ params }: Props) => {
+const CategoryById = async ({ params, searchParams }: Props) => {
   const { id } = await params;
+  const genders = Object.values(Gender);
 
-  if (!AllowedGenders.includes(id)) {
+  if (genders && !genders?.includes(id)) {
     notFound();
   }
 
-  const products = initialProducts.products.filter(
-    (product) => product.gender === id
-  );
+  const search = await searchParams;
+  const allParams = {
+    ...search,
+    gender: id,
+  };
+  const data = await getProductsList(allParams);
 
   return (
     <div>
       <Title title={id} subtitle={`Check all the ${id} products`} />
-      <ProductsGrid products={products} />
-      <Pagination totalPages={5} />
+      <ProductsGrid products={data?.products || []} />
+      <Pagination totalPages={data?.totalPages || 0} />
     </div>
   );
 };

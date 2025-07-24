@@ -1,20 +1,21 @@
 "use client";
 
-import { AllowedGenders } from "@/interfaces/category";
-import { cn } from "@/lib/utils";
-import useUiStore from "@/store/ui";
-import { PATHS } from "@/utils/paths";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
 import { IoCartOutline, IoMenuOutline, IoSearchOutline } from "react-icons/io5";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+import { Gender } from "@/generated/prisma";
+import { PATHS } from "@/utils/paths";
+import useUiStore from "@/store/ui";
+import { cn } from "@/lib/utils";
 
 const TopMenu = () => {
   const { setSidebarOpened } = useUiStore();
   const pathName = usePathname();
-  const currentCategory = pathName.includes("category")
-    ? pathName.split("/").at(-1)
-    : "";
+  const genders = Object.values(Gender);
+  const currentCategory: Gender | undefined = pathName.includes("category")
+    ? (pathName.split("/").at(-1) as Gender)
+    : undefined;
 
   return (
     <nav
@@ -29,19 +30,19 @@ const TopMenu = () => {
       </div>
 
       <div className="items-center hidden space-x-8 md:flex">
-        {AllowedGenders.map((category) => (
+        {(genders || []).map((gender) => (
           <Link
-            key={category}
-            href={PATHS.category(category)}
+            key={gender}
+            href={PATHS.gender(gender)}
             className={cn(
               "flex text-gray-600 hover:text-orange-500 cursor-pointer transition-colors duration-300 capitalize",
               {
-                "text-orange-500": currentCategory === category,
-                "font-bold": currentCategory === category,
+                "text-orange-500": currentCategory === gender,
+                "font-bold": currentCategory === gender,
               }
             )}
           >
-            {category}
+            {gender}
           </Link>
         ))}
       </div>

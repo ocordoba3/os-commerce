@@ -1,7 +1,7 @@
-import { GenderType } from "@/interfaces/category";
+import { Gender } from "@/generated/prisma";
 
 export const PATHS = {
-  category: (category: GenderType) => `/category/${category}`,
+  gender: (category: Gender) => `/category/${category}`,
   product: (slug: string) => `/products/${slug}`,
   cart: "/cart",
   search: "/search",

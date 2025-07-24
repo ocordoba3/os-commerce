@@ -1,4 +1,4 @@
-import { GenderType } from "./category";
+import { Gender } from "@/generated/prisma";
 
 export interface SeedData {
   categories: ValidCategories[];
@@ -8,7 +8,7 @@ export interface SeedData {
 export interface Product {
   category: ValidCategories;
   description: string;
-  gender: GenderType;
+  gender: Gender;
   images: string[];
   inStock: number;
   price: number;
