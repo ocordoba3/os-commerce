@@ -1,7 +1,7 @@
 import { Gender } from "@/generated/prisma";
 
 export const PATHS = {
-  gender: (category: Gender) => `/category/${category}`,
+  gender: (gender: Gender) => `/gender/${gender}`,
   product: (slug: string) => `/products/${slug}`,
   cart: "/cart",
   search: "/search",

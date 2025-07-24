@@ -3,38 +3,38 @@ import ProductsGrid from "@/components/products/ProductsGrid";
 import Pagination from "@/components/ui/Pagination";
 import Title from "@/components/ui/Title";
 import { Gender } from "@/generated/prisma";
+import { genders } from "@/utils/consts";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: { id: Gender };
+  params: { gender: Gender };
   searchParams: {
     page?: string;
     limit?: string;
   };
 }
 
-const CategoryById = async ({ params, searchParams }: Props) => {
-  const { id } = await params;
-  const genders = Object.values(Gender);
+const GenderByName = async ({ params, searchParams }: Props) => {
+  const { gender } = await params;
 
-  if (genders && !genders?.includes(id)) {
+  if (!genders.includes(gender)) {
     notFound();
   }
 
   const search = await searchParams;
   const allParams = {
     ...search,
-    gender: id,
+    gender,
   };
   const data = await getProductsList(allParams);
 
   return (
     <div>
-      <Title title={id} subtitle={`Check all the ${id} products`} />
+      <Title title={gender} subtitle={`Check all the ${gender} products`} />
       <ProductsGrid products={data?.products || []} />
       <Pagination totalPages={data?.totalPages || 0} />
     </div>
   );
 };
 
-export default CategoryById;
+export default GenderByName;

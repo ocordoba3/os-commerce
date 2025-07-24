@@ -1,17 +1,18 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { SizeOpts, SizesType } from "@/interfaces/products";
+import { Size } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
+import { sizes } from "@/utils/consts";
 import { useState } from "react";
 
 interface Props {
   productId: string;
-  productSizes: SizesType[];
+  productSizes: Size[];
 }
 
 const SizeSelector = ({ productSizes }: Props) => {
-  const [selectedSize, setSelectedSize] = useState<SizesType | null>(null);
+  const [selectedSize, setSelectedSize] = useState<Size | null>(null);
   return (
     <div className="my-4">
       <div className="flex items-center justify-between">
@@ -26,7 +27,7 @@ const SizeSelector = ({ productSizes }: Props) => {
 
       <fieldset aria-label="Choose a size" className="mt-4">
         <div className="grid grid-cols-4 gap-4">
-          {SizeOpts.map((size) => {
+          {sizes.map((size) => {
             const isAllowedSize = productSizes.includes(size);
             return (
               <Button

@@ -1,4 +1,4 @@
-import { Gender } from "@/generated/prisma";
+import { Gender, Size } from "@/generated/prisma";
 
 export interface SeedData {
   categories: ValidCategories[];
@@ -12,25 +12,11 @@ export interface Product {
   images: string[];
   inStock: number;
   price: number;
-  sizes: SizesType[];
+  sizes: Size[];
   slug: string;
   tags: string[];
   title: string;
-  //   id: string;
+  id: string;
 }
 
-const SizeValues = {
-  XS: "XS",
-  S: "S",
-  M: "M",
-  L: "L",
-  XL: "XL",
-  XXL: "XXL",
-  XXXL: "XXXL",
-  XXXXL: "XXXXL",
-} as const;
-
-export const SizeOpts = Object.values(SizeValues);
-
-export type SizesType = (typeof SizeOpts)[number];
 export type ValidCategories = "shirts" | "pants" | "hoodies" | "hats";

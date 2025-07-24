@@ -8,12 +8,12 @@ import { Gender } from "@/generated/prisma";
 import { PATHS } from "@/utils/paths";
 import useUiStore from "@/store/ui";
 import { cn } from "@/lib/utils";
+import { genders } from "@/utils/consts";
 
 const TopMenu = () => {
   const { setSidebarOpened } = useUiStore();
   const pathName = usePathname();
-  const genders = Object.values(Gender);
-  const currentCategory: Gender | undefined = pathName.includes("category")
+  const currentCategory: Gender | undefined = pathName.includes("gender")
     ? (pathName.split("/").at(-1) as Gender)
     : undefined;
 
@@ -30,7 +30,7 @@ const TopMenu = () => {
       </div>
 
       <div className="items-center hidden space-x-8 md:flex">
-        {(genders || []).map((gender) => (
+        {genders.map((gender) => (
           <Link
             key={gender}
             href={PATHS.gender(gender)}
