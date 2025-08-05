@@ -1,7 +1,11 @@
+export const revalidate = 172800; // 2 days
+
+import { getProductBySlug } from "@/actions/products/product-by-slug";
 import Breadcrumb from "@/components/products/Breadcrumb";
 import QuantitySelector from "@/components/products/QuantitySelector";
 import Reviews from "@/components/products/Reviews";
 import SizeSelector from "@/components/products/SizeSelector";
+import StockLabel from "@/components/products/StockLabel";
 import { Button } from "@/components/ui/Button";
 import {
   Carousel,
@@ -10,7 +14,6 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/Carousel";
-import { initialProducts } from "@/seed/seed";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -21,26 +24,24 @@ interface Props {
 
 const ProductByIdPage = async ({ params }: Props) => {
   const { slug } = await params;
-  const product = await initialProducts.products.find(
-    (product) => product.slug === slug
-  );
+  const product = await getProductBySlug({ slug });
 
   if (!product) {
-    notFound();
+    return notFound();
   }
 
   return (
     <div className="bg-white flex flex-wrap px-0 md:px-20 2xl:px-80">
-      <Breadcrumb gender={product.gender} type={product.category} />
+      <Breadcrumb gender={product.gender} slug={product.slug} />
 
       <div className="w-full md:w-3/5 pt-8 flex justify-center">
         <Carousel className="w-full flex justify-center">
           <CarouselContent>
-            {product.images.map((image, idx) => (
+            {product.images.map((url, idx) => (
               <CarouselItem className="p-0 flex justify-center" key={idx}>
                 <Image
                   key={idx}
-                  src={`/products/${image}`}
+                  src={`/products/${url}`}
                   alt={`${product.title} ${idx}`}
                   width={1000}
                   height={1000}
@@ -68,6 +69,7 @@ const ProductByIdPage = async ({ params }: Props) => {
           <p className="text-5xl tracking-tight text-gray-900">
             ${product.price}
           </p>
+          <StockLabel slug={product.slug} />
           <QuantitySelector productId={product.slug} />
           <SizeSelector productId={product.slug} productSizes={product.sizes} />
           <Button>Add to cart</Button>
