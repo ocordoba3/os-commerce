@@ -1,11 +1,5 @@
 export const revalidate = 172800; // 2 days
 
-import { getProductBySlug } from "@/actions/products/product-by-slug";
-import Breadcrumb from "@/components/products/Breadcrumb";
-import QuantitySelector from "@/components/products/QuantitySelector";
-import Reviews from "@/components/products/Reviews";
-import SizeSelector from "@/components/products/SizeSelector";
-import StockLabel from "@/components/products/StockLabel";
 import { Button } from "@/components/ui/Button";
 import {
   Carousel,
@@ -14,12 +8,28 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/Carousel";
-import Image from "next/image";
+import { getProductBySlug } from "@/actions/products/product-by-slug";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import React from "react";
+import Breadcrumb from "@/components/products/Breadcrumb";
+import Image from "next/image";
+import QuantitySelector from "@/components/products/QuantitySelector";
+import Reviews from "@/components/products/Reviews";
+import SizeSelector from "@/components/products/SizeSelector";
+import StockLabel from "@/components/products/StockLabel";
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+
+  const product = await getProductBySlug({ slug });
+  const title = product?.title;
+  const description = product?.description;
+
+  return { title, description, openGraph: { title, description, images: [] } };
 }
 
 const ProductByIdPage = async ({ params }: Props) => {

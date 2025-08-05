@@ -6,6 +6,8 @@ import Pagination from "@/components/ui/Pagination";
 import Title from "@/components/ui/Title";
 import { Gender } from "@/generated/prisma";
 import { genders } from "@/utils/consts";
+import { titleCase } from "@/utils/functions";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -16,7 +18,16 @@ interface Props {
   }>;
 }
 
-const GenderByName = async ({ params, searchParams }: Props) => {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const gender = (await params).gender;
+
+  const capitalizedGender = titleCase(gender);
+  const title = `${capitalizedGender} - Products`;
+
+  return { title, description: `Check all the ${gender} products` };
+}
+
+const ProductsByGender = async ({ params, searchParams }: Props) => {
   const { gender } = await params;
 
   if (!genders.includes(gender)) {
@@ -39,4 +50,4 @@ const GenderByName = async ({ params, searchParams }: Props) => {
   );
 };
 
-export default GenderByName;
+export default ProductsByGender;

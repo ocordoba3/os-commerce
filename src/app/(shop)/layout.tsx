@@ -1,6 +1,16 @@
 import Sidebar from "@/components/ui/Sidebar";
 import TopMenu from "@/components/ui/TopMenu";
+import { Metadata } from "next";
 import React, { ReactNode } from "react";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | os-commerce",
+    default: "Home | os-commerce",
+  },
+  description:
+    "You will find the perfect product for you into our os-commerce store",
+};
 
 const ShopLayout = ({ children }: { children: ReactNode }) => {
   return (

@@ -13,7 +13,7 @@ interface Props {
   }>;
 }
 
-export default async function ShopPage({ searchParams }: Props) {
+export default async function HomePage({ searchParams }: Props) {
   const data = await getProductsList((await searchParams) || {});
 
   if (data?.products.length === 0) {
