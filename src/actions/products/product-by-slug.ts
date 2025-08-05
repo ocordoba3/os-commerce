@@ -19,6 +19,7 @@ export async function getProductBySlug({ slug }: Props) {
             url: true,
           },
         },
+        sizes: true,
       },
       where: {
         slug,
@@ -28,10 +29,17 @@ export async function getProductBySlug({ slug }: Props) {
     if (!product) {
       return null;
     }
+    const { ProductImage, categoryId, ...rest } = product;
 
-    const { ProductImage, ...rest } = product;
+    const category = await prisma.category.findUnique({
+      where: { id: categoryId },
+    });
 
-    return { ...rest, images: ProductImage.map(({ url }) => url) };
+    return {
+      ...rest,
+      images: ProductImage.map(({ url }) => url),
+      category: category?.name || "",
+    };
   } catch (error) {
     console.error(error);
   }

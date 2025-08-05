@@ -1,6 +1,5 @@
 export const revalidate = 172800; // 2 days
 
-import { Button } from "@/components/ui/Button";
 import {
   Carousel,
   CarouselContent,
@@ -13,10 +12,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/components/products/Breadcrumb";
 import Image from "next/image";
-import QuantitySelector from "@/components/products/QuantitySelector";
 import Reviews from "@/components/products/Reviews";
-import SizeSelector from "@/components/products/SizeSelector";
-import StockLabel from "@/components/products/StockLabel";
+import AddToCart from "@/components/products/AddToCart";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -79,10 +76,18 @@ const ProductByIdPage = async ({ params }: Props) => {
           <p className="text-5xl tracking-tight text-gray-900">
             ${product.price}
           </p>
-          <StockLabel slug={product.slug} />
-          <QuantitySelector productId={product.slug} />
-          <SizeSelector productId={product.slug} productSizes={product.sizes} />
-          <Button>Add to cart</Button>
+          <AddToCart
+            product={{
+              title: product.title,
+              slug: product.slug,
+              price: product.price,
+              productId: product.id,
+              size: null,
+              quantity: 1,
+              image: product.images[0],
+            }}
+            sizes={product.sizes}
+          />
         </div>
       </div>
     </div>

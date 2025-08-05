@@ -1,7 +1,7 @@
 "use client";
 
-import QuantitySelector from "@/components/products/QuantitySelector";
-import { Product } from "@/interfaces/products";
+import AddToCart from "@/components/products/AddToCart";
+import { ProductObj } from "@/interfaces/products";
 import { PATHS } from "@/utils/paths";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 interface Props {
-  product: Product;
+  product: ProductObj;
 }
 
 const CartProductItem = ({ product }: Props) => {
@@ -39,7 +39,18 @@ const CartProductItem = ({ product }: Props) => {
           Size: <b className="font-lg">M</b>
         </p>
 
-        <QuantitySelector productId={product.slug} />
+        <AddToCart
+          product={{
+            title: product.title,
+            slug: product.slug,
+            price: product.price,
+            productId: product.id,
+            size: null,
+            quantity: 1,
+            image: product.images[0],
+          }}
+          sizes={product.sizes}
+        />
 
         {isCartView && (
           <p className="w-full text-sm text-gray-600 underline cursor-pointer self-end h-fit">

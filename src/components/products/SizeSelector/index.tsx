@@ -1,18 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { Size } from "@/generated/prisma";
+import { Size, SizeQuantity } from "@/generated/prisma";
+import { CartProduct } from "@/interfaces/products";
 import { cn } from "@/lib/utils";
 import { sizes } from "@/utils/consts";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
-  productId: string;
-  productSizes: Size[];
+  productSizes: SizeQuantity[];
+  selection: CartProduct;
+  setSelection: Dispatch<SetStateAction<CartProduct>>;
 }
 
-const SizeSelector = ({ productSizes }: Props) => {
-  const [selectedSize, setSelectedSize] = useState<Size | null>(null);
+const SizeSelector = ({ productSizes, selection, setSelection }: Props) => {
+  const selectedSize = selection.size;
+
+  function handleChange(value: Size | null) {
+    setSelection((prev) => ({ ...prev, size: value }));
+  }
+
   return (
     <div className="my-4">
       <div className="flex items-center justify-between">
@@ -28,12 +35,14 @@ const SizeSelector = ({ productSizes }: Props) => {
       <fieldset aria-label="Choose a size" className="mt-4">
         <div className="grid grid-cols-4 gap-4">
           {sizes.map((size) => {
-            const isAllowedSize = productSizes.includes(size);
+            const isAllowedSize = productSizes.some(
+              (pSize) => pSize.size === size
+            );
             return (
               <Button
                 key={size}
                 onClick={() =>
-                  setSelectedSize(size === selectedSize ? null : size)
+                  handleChange(size === selectedSize ? null : size)
                 }
                 className={cn(
                   "group relative bg-white text-black flex place-content-center rounded-md border p-2 text-sm font-medium uppercase",

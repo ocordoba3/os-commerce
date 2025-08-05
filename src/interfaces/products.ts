@@ -1,22 +1,20 @@
-import { Gender, Size } from "@/generated/prisma";
+import { Product, Size, SizeQuantity } from "@/generated/prisma";
 
 export interface SeedData {
   categories: ValidCategories[];
   products: Product[];
 }
 
-export interface Product {
-  category: ValidCategories;
-  description: string;
-  gender: Gender;
-  images: string[];
-  inStock: number;
-  price: number;
-  sizes: Size[];
+export interface CartProduct {
+  size: Size | null;
+  quantity: number;
+  productId: string;
   slug: string;
-  tags: string[];
+  price: number;
   title: string;
-  id?: string;
+  image: string;
 }
+
+export type ProductObj = Product & { images: string[]; sizes: SizeQuantity[] };
 
 export type ValidCategories = "shirts" | "pants" | "hoodies" | "hats";

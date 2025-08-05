@@ -1,7 +1,6 @@
 "use server";
 
 import { Pagination } from "@/interfaces/pagination";
-import { Product } from "@/interfaces/products";
 import prisma from "@/lib/prisma";
 
 export async function getProductsList({
@@ -34,18 +33,19 @@ export async function getProductsList({
             url: true,
           },
         },
+        sizes: true,
       },
       where: {
         gender,
       },
     });
-    const mappedProducts: Product[] = products.map(
-      ({ ProductImage, ...rest }) => ({
+
+    const mappedProducts = products.map(({ ProductImage, ...rest }) => {
+      return {
         ...rest,
         images: ProductImage.map(({ url }) => url),
-        category: "hats",
-      })
-    );
+      };
+    });
 
     return {
       products: mappedProducts,

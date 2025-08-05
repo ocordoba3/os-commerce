@@ -1,11 +1,11 @@
-import { Product } from "@/interfaces/products";
+import { ProductObj } from "@/interfaces/products";
 import { PATHS } from "@/utils/paths";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 interface Props {
-  product: Product;
+  product: ProductObj;
 }
 
 const ProductItem = ({ product }: Props) => {

@@ -1,9 +1,9 @@
 import React from "react";
 import ProductItem from "../ProductItem";
-import { Product } from "@/interfaces/products";
+import { ProductObj } from "@/interfaces/products";
 
 interface Props {
-  products: Product[];
+  products: ProductObj[];
 }
 
 const ProductsGrid = ({ products }: Props) => {

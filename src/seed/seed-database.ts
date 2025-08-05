@@ -1,5 +1,6 @@
 import { initialProducts } from "./seed";
 import prisma from "../lib/prisma";
+import { SizeQuantity } from "../generated/prisma";
 
 async function main() {
   const { categories, products } = initialProducts;
@@ -8,6 +9,7 @@ async function main() {
     prisma.category.deleteMany(),
     prisma.product.deleteMany(),
     prisma.productImage.deleteMany(),
+    prisma.sizeQuantity.deleteMany(),
   ]);
 
   // 2. Insert categories
@@ -22,7 +24,7 @@ async function main() {
   const categoriesDB = await prisma.category.findMany();
   products.forEach(async (product) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { category, images, ...rest } = product;
+    const { category, images, sizes, ...rest } = product;
 
     const categoryExists = categoriesDB.find(
       (categoryDB) =>
@@ -36,10 +38,19 @@ async function main() {
       },
     });
 
-    images.forEach(async (url) => {
+    images.forEach(async (url: string) => {
       await prisma.productImage.create({
         data: {
           url,
+          productId: productDB.id,
+        },
+      });
+    });
+
+    sizes.forEach(async (size: SizeQuantity) => {
+      await prisma.sizeQuantity.create({
+        data: {
+          ...size,
           productId: productDB.id,
         },
       });

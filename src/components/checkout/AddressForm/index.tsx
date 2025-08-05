@@ -56,8 +56,6 @@ const AddressForm = () => {
     router.replace(PATHS.checkout);
   }
 
-  console.log(form.formState.errors);
-
   return (
     <div className="flex flex-col sm:justify-center sm:items-center md:px-8">
       <div className="w-full flex flex-col justify-center text-left">

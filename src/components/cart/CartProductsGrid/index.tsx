@@ -2,9 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import ProductItem from "../CartProductItem";
-import { Product } from "@/interfaces/products";
 import { PATHS } from "@/utils/paths";
 import { cn } from "@/lib/utils";
+import { Product } from "@/generated/prisma";
 
 interface Props {
   products: Product[];

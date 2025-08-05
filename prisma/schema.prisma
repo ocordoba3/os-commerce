@@ -10,9 +10,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Size {
@@ -39,16 +38,25 @@ model Category {
   Product Product[]
 }
 
+model SizeQuantity {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  size      Size
+  quantity  Int
+
+  @@index([productId])
+}
+
 model Product {
-  id          String   @id @default(uuid())
+  id          String         @id @default(uuid())
   description String
   gender      Gender
-  inStock     Int
-  price       Float    @default(0)
-  sizes       Size[]   @default([])
-  slug        String   @unique
-  tags        String[] @default([])
-  title       String   @unique
+  price       Float          @default(0)
+  sizes       SizeQuantity[]
+  slug        String         @unique
+  tags        String[]       @default([])
+  title       String         @unique
 
   category     Category       @relation(fields: [categoryId], references: [id])
   categoryId   String
