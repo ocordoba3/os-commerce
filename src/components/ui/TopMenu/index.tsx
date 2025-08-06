@@ -9,9 +9,11 @@ import { PATHS } from "@/utils/paths";
 import useUiStore from "@/store/ui";
 import { cn } from "@/lib/utils";
 import { genders } from "@/utils/consts";
+import useCartStore from "@/store/cart";
 
 const TopMenu = () => {
   const { setSidebarOpened } = useUiStore();
+  const { productsQuantity } = useCartStore();
   const pathName = usePathname();
   const currentCategory: Gender | undefined = pathName.includes("gender")
     ? (pathName.split("/").at(-1) as Gender)
@@ -61,11 +63,11 @@ const TopMenu = () => {
           className="relative flex items-center justify-center p-2 "
         >
           <IoCartOutline color="black" size={20} />
-          {/* {items > 0 && ( */}
-          <span className="absolute top-0 right-0 bg-orange-500 text-white font-bold rounded-full px-1 text-xs">
-            {/* {items} */}3
-          </span>
-          {/* )} */}
+          {productsQuantity > 0 && (
+            <span className="absolute top-0 right-0 bg-orange-500 text-white font-bold rounded-full px-1 text-xs">
+              {productsQuantity}
+            </span>
+          )}
         </Link>
 
         <button

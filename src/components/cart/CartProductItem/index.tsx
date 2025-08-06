@@ -1,7 +1,7 @@
 "use client";
 
 import AddToCart from "@/components/products/AddToCart";
-import { ProductObj } from "@/interfaces/products";
+import { CartProduct } from "@/interfaces/products";
 import { PATHS } from "@/utils/paths";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,12 +9,13 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 interface Props {
-  product: ProductObj;
+  product: CartProduct;
 }
 
 const CartProductItem = ({ product }: Props) => {
   const path = usePathname();
   const isCartView = path === PATHS.cart;
+  console.log("CartProductsGrid", product);
 
   return (
     <section className="w-full grid grid-cols-1 lg:grid-cols-[30%_70%] text-gray-700 bg-clip-border items-center bg-gray-50">
@@ -23,7 +24,7 @@ const CartProductItem = ({ product }: Props) => {
           quality={100}
           width={160}
           height={160}
-          src={`/products/${product.images[0]}`}
+          src={`/products/${product.image}`}
           alt={product.title}
           className="object-cover fadeIn transition-all w-full"
         />
@@ -39,18 +40,7 @@ const CartProductItem = ({ product }: Props) => {
           Size: <b className="font-lg">M</b>
         </p>
 
-        <AddToCart
-          product={{
-            title: product.title,
-            slug: product.slug,
-            price: product.price,
-            productId: product.id,
-            size: null,
-            quantity: 1,
-            image: product.images[0],
-          }}
-          sizes={product.sizes}
-        />
+        <AddToCart product={product} sizes={[]} />
 
         {isCartView && (
           <p className="w-full text-sm text-gray-600 underline cursor-pointer self-end h-fit">

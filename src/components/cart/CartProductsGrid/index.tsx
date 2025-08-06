@@ -4,13 +4,10 @@ import { usePathname } from "next/navigation";
 import ProductItem from "../CartProductItem";
 import { PATHS } from "@/utils/paths";
 import { cn } from "@/lib/utils";
-import { Product } from "@/generated/prisma";
+import useCartStore from "@/store/cart";
 
-interface Props {
-  products: Product[];
-}
-
-const CartProductsGrid = ({ products }: Props) => {
+const CartProductsGrid = () => {
+  const { products } = useCartStore();
   const path = usePathname();
   const isCartView = path === PATHS.cart;
 

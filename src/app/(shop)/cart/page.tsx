@@ -1,7 +1,6 @@
 import CartProductsGrid from "@/components/cart/CartProductsGrid";
 import Title from "@/components/ui/Title";
 import { PATHS } from "@/utils/paths";
-import { initialProducts } from "@/seed/seed";
 import { ForwardIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -19,9 +18,7 @@ const CartPage = () => {
         </Link>
       </div>
       <section className="grid md:grid-cols-[65%_auto] gap-8 max-w-full px-0 md:px-20 2xl:px-80">
-        <CartProductsGrid
-          products={[initialProducts.products[0], initialProducts.products[2]]}
-        />
+        <CartProductsGrid />
 
         <article className="w-full bg-orange-100 p-8 shadow-md box-border">
           <h2 className="font-bold text-2xl mb-4">Summary</h2>

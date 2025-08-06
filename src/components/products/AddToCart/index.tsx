@@ -6,6 +6,9 @@ import SizeSelector from "../SizeSelector";
 import { useState } from "react";
 import { CartProduct } from "@/interfaces/products";
 import { SizeQuantity } from "@/generated/prisma";
+import useCartStore from "@/store/cart";
+import { usePathname } from "next/navigation";
+import { PATHS } from "@/utils/paths";
 
 interface Props {
   product: CartProduct;
@@ -13,19 +16,26 @@ interface Props {
 }
 
 const AddToCart = ({ product, sizes }: Props) => {
+  const path = usePathname();
+  const isCartView = path === PATHS.cart;
+  const { addCartProduct, getProductsQuantity } = useCartStore();
   const [selection, setSelection] = useState<CartProduct>(product);
 
   function handleAddCart() {
-    console.log(selection);
+    addCartProduct(selection);
+    getProductsQuantity();
+    setSelection(product);
   }
 
   return (
     <>
-      <SizeSelector
-        productSizes={sizes}
-        selection={selection}
-        setSelection={setSelection}
-      />
+      {!isCartView && (
+        <SizeSelector
+          productSizes={sizes}
+          selection={selection}
+          setSelection={setSelection}
+        />
+      )}
       <QuantitySelector
         selection={selection}
         setSelection={setSelection}
