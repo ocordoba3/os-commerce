@@ -15,18 +15,17 @@ interface Props {
 const CartProductItem = ({ product }: Props) => {
   const path = usePathname();
   const isCartView = path === PATHS.cart;
-  console.log("CartProductsGrid", product);
 
   return (
-    <section className="w-full grid grid-cols-1 lg:grid-cols-[30%_70%] text-gray-700 bg-clip-border items-center bg-gray-50">
-      <Link href={PATHS.product(product.slug)}>
+    <section className="w-full grid grid-cols-1 md:grid-cols-[30%_70%] text-gray-700 bg-clip-border items-center bg-gray-50">
+      <Link className="flex justify-center" href={PATHS.product(product.slug)}>
         <Image
           quality={100}
           width={160}
           height={160}
           src={`/products/${product.image}`}
           alt={product.title}
-          className="object-cover fadeIn transition-all w-full"
+          className="object-cover fadeIn transition-all w-fit md:w-full"
         />
       </Link>
       <div className="w-full h-auto grid gap-0 p-2 lg:p-4">
@@ -34,13 +33,13 @@ const CartProductItem = ({ product }: Props) => {
           {product.title}
         </h2>
         <p className="w-full text-sm text-gray-900 h-fit">
-          Price: <b className="font-lg">${product.price}</b>
+          Price: <b className="font-lg">${product.price * product.quantity}</b>
         </p>
         <p className="w-full text-sm text-gray-900 h-fit">
-          Size: <b className="font-lg">M</b>
+          Size: <b className="font-lg">{product.size}</b>
         </p>
 
-        <AddToCart product={product} sizes={[]} />
+        <AddToCart product={product} sizes={product.allowedSizes} />
 
         {isCartView && (
           <p className="w-full text-sm text-gray-600 underline cursor-pointer self-end h-fit">

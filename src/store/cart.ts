@@ -27,20 +27,21 @@ const useCartStore = create<Store>()(
         set((state) => {
           let newProducts = [];
           const productExists = state.products.some(
-            (prod) =>
-              prod.productId === product.productId && prod.size === product.size
+            (stateProd) =>
+              stateProd.productId === product.productId &&
+              stateProd.size === product.size
           );
           if (!productExists) {
             newProducts = [...state.products, product];
           } else {
-            newProducts = state.products.filter((prod) => {
+            newProducts = state.products.map((stateProd) => {
               if (
-                prod.productId === product.productId &&
-                prod.size === product.size
+                stateProd.productId === product.productId &&
+                stateProd.size === product.size
               ) {
-                return { ...prod, quantity: prod.quantity + 1 };
+                return { ...stateProd, quantity: product.quantity };
               }
-              return prod;
+              return stateProd;
             });
           }
 

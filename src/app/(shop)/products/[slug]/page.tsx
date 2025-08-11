@@ -85,6 +85,7 @@ const ProductByIdPage = async ({ params }: Props) => {
               size: null,
               quantity: 1,
               image: product.images[0],
+              allowedSizes: product.sizes,
             }}
             sizes={product.sizes}
           />

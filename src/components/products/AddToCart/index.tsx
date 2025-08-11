@@ -41,13 +41,15 @@ const AddToCart = ({ product, sizes }: Props) => {
         setSelection={setSelection}
         sizes={sizes}
       />
-      <Button
-        className="bg-orange-400 hover:bg-orange-500 disabled:bg-orange-200 disabled:text-gray-500 disabled:cursor-not-allowed"
-        disabled={!selection.size}
-        onClick={handleAddCart}
-      >
-        Add to cart
-      </Button>
+      {!isCartView && (
+        <Button
+          className="bg-orange-400 hover:bg-orange-500 disabled:bg-orange-200 disabled:text-gray-500 disabled:cursor-not-allowed"
+          disabled={!selection.size}
+          onClick={handleAddCart}
+        >
+          Add to cart
+        </Button>
+      )}
     </>
   );
 };

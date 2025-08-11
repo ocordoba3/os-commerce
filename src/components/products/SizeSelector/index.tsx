@@ -17,7 +17,7 @@ const SizeSelector = ({ productSizes, selection, setSelection }: Props) => {
   const selectedSize = selection.size;
 
   function handleChange(value: Size | null) {
-    setSelection((prev) => ({ ...prev, size: value }));
+    setSelection((prev) => ({ ...prev, size: value, quantity: 1 }));
   }
 
   return (

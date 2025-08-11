@@ -3,8 +3,11 @@
 import { Button } from "@/components/ui/Button";
 import { SizeQuantity } from "@/generated/prisma";
 import { CartProduct } from "@/interfaces/products";
+import useCartStore from "@/store/cart";
+import { PATHS } from "@/utils/paths";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Dispatch, SetStateAction, useState } from "react";
 
 interface Props {
   sizes: SizeQuantity[];
@@ -13,6 +16,10 @@ interface Props {
 }
 
 const QuantitySelector = ({ selection, setSelection, sizes }: Props) => {
+  const { addCartProduct, getProductsQuantity } = useCartStore();
+  const path = usePathname();
+  const isCartView = path === PATHS.cart;
+
   const { quantity, size: selectedSize } = selection;
   const maxQuantity =
     sizes.find(({ size }) => size === selectedSize)?.quantity || 0;
@@ -31,13 +38,19 @@ const QuantitySelector = ({ selection, setSelection, sizes }: Props) => {
     ) {
       return;
     }
-    setSelection((prev) => ({ ...prev, quantity: prev.quantity + value }));
+    const newSelection = { ...selection, quantity: selection.quantity + value };
+    if (isCartView) {
+      handleAddCart(newSelection);
+    } else {
+      setSelection(newSelection);
+    }
   }
 
-  useEffect(() => {
-    setSelection((prev) => ({ ...prev, quantity: 1 }));
-    setIsError(false);
-  }, [selectedSize, setSelection]);
+  function handleAddCart(newSelection: CartProduct) {
+    addCartProduct(newSelection);
+    getProductsQuantity();
+    setSelection(newSelection);
+  }
 
   return (
     <div className="w-full flex flex-wrap gap-4 items-center my-4">

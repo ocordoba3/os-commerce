@@ -13,6 +13,7 @@ export interface CartProduct {
   price: number;
   title: string;
   image: string;
+  allowedSizes: SizeQuantity[];
 }
 
 export type ProductObj = Product & { images: string[]; sizes: SizeQuantity[] };
