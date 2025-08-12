@@ -5,7 +5,8 @@ import {
   AccordionContent,
 } from "@/components/ui/Accordion";
 import AddressForm from "../AddressForm";
-import Summary from "../Summary";
+import CartProductsGrid from "@/components/cart/CartProductsGrid";
+
 import { ReactNode } from "react";
 
 interface AccordionItemInterface {
@@ -19,7 +20,7 @@ const CheckoutAccordion = () => {
     {
       key: "summary",
       label: "Summary",
-      Component: <Summary />,
+      Component: <CartProductsGrid />,
     },
     {
       key: "delivery",

@@ -14,6 +14,7 @@ import Breadcrumb from "@/components/products/Breadcrumb";
 import Image from "next/image";
 import Reviews from "@/components/products/Reviews";
 import AddToCart from "@/components/products/AddToCart";
+import { currencyFormat } from "@/utils/functions";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -74,7 +75,7 @@ const ProductByIdPage = async ({ params }: Props) => {
         <div className="mt-4 lg:row-span-3">
           <h2 className="sr-only">Price</h2>
           <p className="text-5xl tracking-tight text-gray-900">
-            ${product.price}
+            {currencyFormat(product.price)}
           </p>
           <AddToCart
             product={{

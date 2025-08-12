@@ -5,7 +5,7 @@ import {
   AccordionContent,
 } from "@/components/ui/Accordion";
 import { ReactNode } from "react";
-import Summary from "@/components/checkout/Summary";
+import OrdersProductsGrid from "../OrdersProductsGrid";
 
 interface AccordionItemInterface {
   key: "summary" | "delivery";
@@ -18,7 +18,7 @@ const OrdersAccordion = () => {
     {
       key: "summary",
       label: "Summary",
-      Component: <Summary />,
+      Component: <OrdersProductsGrid />,
     },
     {
       key: "delivery",
@@ -31,7 +31,7 @@ const OrdersAccordion = () => {
     <Accordion
       defaultValue={["summary", "delivery"]}
       type="multiple"
-      className="w-full order-2 md:order-1"
+      className="w-full"
     >
       {accordionItems.map(({ key, label, Component }) => (
         <AccordionItem key={key} value={key}>

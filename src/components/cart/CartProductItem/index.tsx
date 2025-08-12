@@ -47,8 +47,15 @@ const CartProductItem = ({ product }: Props) => {
         <p className="w-full text-sm text-gray-900 h-fit">
           Size: <b className="font-lg">{product.size}</b>
         </p>
+        {!isCartView && (
+          <p className="w-full text-sm text-gray-900 h-fit">
+            Quantity: <b className="font-lg">{product.quantity}</b>
+          </p>
+        )}
 
-        <AddToCart product={product} sizes={product.allowedSizes} />
+        {isCartView && (
+          <AddToCart product={product} sizes={product.allowedSizes} />
+        )}
 
         {isCartView && (
           <Button

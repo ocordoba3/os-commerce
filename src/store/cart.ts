@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { CartProduct } from "@/interfaces/products";
 import { Size } from "@/generated/prisma";
+import { currencyFormat } from "@/utils/functions";
 
 type CartState = {
   products: CartProduct[];
@@ -15,9 +16,9 @@ type CartActions = {
   // Other functions
   getProductsQuantity: () => number;
   getProductsTotal: (taxRate?: number) => {
-    total: number;
-    subtotal: number;
-    tax: number;
+    total: string;
+    subtotal: string;
+    tax: string;
   };
 };
 
@@ -73,7 +74,11 @@ const useCartStore = create<CartState & CartActions>()(
         );
         const tax = parseFloat((subtotal * (taxRate ?? 0)).toFixed(2));
         const total = subtotal + tax;
-        return { total, subtotal, tax };
+        return {
+          total: currencyFormat(total),
+          subtotal: currencyFormat(subtotal),
+          tax: currencyFormat(tax),
+        };
       },
     }),
     {

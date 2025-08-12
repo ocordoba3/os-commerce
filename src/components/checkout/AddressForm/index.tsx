@@ -19,18 +19,17 @@ const formSchema = z.object({
   full_name: z.string().min(5, {
     message: "Full Name must be at least 5 characters.",
   }),
+  phone: z.string(),
   address: z.string().min(1, {
     message: "Required Field",
   }),
   complement_address: z.string(),
-  postal_code: z.string(),
-  city: z.string().min(1, {
-    message: "Required Field",
-  }),
   country: z.string().min(1, {
     message: "Required Field",
   }),
-  phone: z.string(),
+  city: z.string().min(1, {
+    message: "Required Field",
+  }),
 });
 
 const AddressForm = () => {
@@ -39,12 +38,11 @@ const AddressForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       full_name: "",
+      phone: "",
       address: "",
       complement_address: "",
-      postal_code: "",
       country: "",
       city: "",
-      phone: "",
     },
     mode: "onChange",
   });
@@ -57,7 +55,7 @@ const AddressForm = () => {
   }
 
   return (
-    <div className="flex flex-col sm:justify-center sm:items-center md:px-8">
+    <div className="flex flex-col sm:justify-center sm:items-center">
       <div className="w-full flex flex-col justify-center text-left">
         <Form {...form}>
           <form
@@ -73,6 +71,19 @@ const AddressForm = () => {
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
                       <Input placeholder="John Doe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl>
+                      <Input placeholder="123456789" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -104,27 +115,15 @@ const AddressForm = () => {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
-                name="phone"
+                name="country"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel>Country</FormLabel>
                     <FormControl>
-                      <Input placeholder="123456789" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="postal_code"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Postal Code</FormLabel>
-                    <FormControl>
-                      <Input placeholder="111111" {...field} />
+                      <Input placeholder="Colombia" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -143,25 +142,12 @@ const AddressForm = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="country"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Country</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Colombia" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </div>
 
-            <div className="flex mt-8 w-full md:w-1/2">
+            <div className="flex justify-end mt-8 w-full">
               <Button
                 disabled={!form.formState.isValid}
-                className="w-full"
+                className="w-1/3"
                 type="submit"
               >
                 Place Order

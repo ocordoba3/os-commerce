@@ -1,23 +1,16 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import CartProductItem from "../CartProductItem";
-import { PATHS } from "@/utils/paths";
-import { cn } from "@/lib/utils";
 import useCartStore from "@/store/cart";
-import EmptyCart from "../EmptyCart";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/Skeleton";
+import EmptyCart from "@/components/cart/EmptyCart";
+import CartProductItem from "@/components/cart/CartProductItem";
 
-const CartProductsGrid = () => {
+const OrdersProductsGrid = () => {
   const { products, getProductsTotal, getProductsQuantity } = useCartStore();
   const { tax, total, subtotal } = getProductsTotal(0.1); // 0.1 equals 10% tax
   const productsQuantity = getProductsQuantity();
   const [loading, setLoading] = useState(true);
-  const path = usePathname();
-  const isCartView = path === PATHS.cart;
-  const isCheckoutView = path === PATHS.checkout;
 
   useEffect(() => {
     setLoading(false);
@@ -32,19 +25,8 @@ const CartProductsGrid = () => {
   }
 
   return (
-    <section
-      className={cn("grid md:grid-cols-[65%_auto] gap-8 max-w-full px-0", {
-        "md:px-20": isCartView,
-        "2xl:px-80": isCartView,
-      })}
-    >
-      <div
-        className={cn("w-full flex flex-wrap gap-8 place-content-start", {
-          "md:w-2/5": !isCartView && !isCheckoutView,
-          "order-1": !isCartView && !isCheckoutView,
-          "md:order-2": !isCartView && !isCheckoutView,
-        })}
-      >
+    <section className="grid md:grid-cols-[65%_auto] gap-8 max-w-full px-0">
+      <div className="w-full flex flex-wrap gap-8 place-content-start">
         {products.map((product) => (
           <CartProductItem
             key={`${product.slug}-${product.size}`}
@@ -77,18 +59,9 @@ const CartProductsGrid = () => {
           <span>Total</span>
           <span>{total}</span>
         </div>
-
-        <div className="w-full border border-gray-300 mb-8"></div>
-
-        <Link
-          href={PATHS.checkout}
-          className="bg-black text-white hover:bg-black/90 transition-all flex cursor-pointer rounded-md text-sm font-medium px-4 py-2 justify-center"
-        >
-          {isCartView ? "Continue to checkout" : "Go to payment"}
-        </Link>
       </article>
     </section>
   );
 };
 
-export default CartProductsGrid;
+export default OrdersProductsGrid;
