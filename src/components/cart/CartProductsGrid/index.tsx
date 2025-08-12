@@ -11,8 +11,9 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/Skeleton";
 
 const CartProductsGrid = () => {
-  const { products, getProductsTotal } = useCartStore();
-  const productsTotal = getProductsTotal();
+  const { products, getProductsTotal, getProductsQuantity } = useCartStore();
+  const { tax, total, subtotal } = getProductsTotal(0.1); // 0.1 equals 10% tax
+  const productsQuantity = getProductsQuantity();
   const [loading, setLoading] = useState(true);
   const path = usePathname();
   const isCartView = path === PATHS.cart;
@@ -45,27 +46,33 @@ const CartProductsGrid = () => {
           />
         ))}
       </div>
-      <article className="w-full bg-orange-100 p-8 shadow-md box-border">
+      <article className="w-full bg-orange-100 p-8 shadow-md box-border h-fit">
         <h2 className="font-bold text-2xl mb-4">Summary</h2>
 
         <div className="flex w-full justify-between mb-2 text-lg">
           <span>
-            Subtotal <small className="text-xs">1 item(s)</small>
+            Subtotal{" "}
+            <small className="text-xs">{productsQuantity} item(s)</small>
           </span>
-          <span>${productsTotal}</span>
+          <span>${subtotal}</span>
         </div>
         <div className="flex w-full justify-between mb-2 text-lg">
-          <span>Shipping discount</span>
-          <span>-$5.00</span>
+          <span>Discount</span>
+          <span>$0</span>
         </div>
         <div className="flex w-full justify-between text-lg">
-          <span>
-            Tax <small className="text-xs">(Calculated at checkout)</small>
-          </span>
-          <span>-$5.00</span>
+          <span>Tax</span>
+          <span>${tax}</span>
         </div>
 
-        <div className="w-full border border-gray-300 my-8"></div>
+        <div className="w-full border border-gray-300 my-2"></div>
+
+        <div className="flex w-full justify-between text-lg mb-2">
+          <span>Total</span>
+          <span>${total}</span>
+        </div>
+
+        <div className="w-full border border-gray-300 mb-8"></div>
 
         <Link
           href={PATHS.checkout}

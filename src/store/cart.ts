@@ -14,7 +14,11 @@ type CartActions = {
   clear: () => void;
   // Other functions
   getProductsQuantity: () => number;
-  getProductsTotal: () => number;
+  getProductsTotal: (taxRate?: number) => {
+    total: number;
+    subtotal: number;
+    tax: number;
+  };
 };
 
 const useCartStore = create<CartState & CartActions>()(
@@ -62,8 +66,15 @@ const useCartStore = create<CartState & CartActions>()(
       getProductsQuantity: () =>
         get().products.reduce((acc, p) => acc + p.quantity, 0),
 
-      getProductsTotal: () =>
-        get().products.reduce((acc, p) => acc + p.quantity * p.price, 0),
+      getProductsTotal: (taxRate?: number) => {
+        const subtotal = get().products.reduce(
+          (acc, p) => acc + p.quantity * p.price,
+          0
+        );
+        const tax = parseFloat((subtotal * (taxRate ?? 0)).toFixed(2));
+        const total = subtotal + tax;
+        return { total, subtotal, tax };
+      },
     }),
     {
       name: "cart-storage",
