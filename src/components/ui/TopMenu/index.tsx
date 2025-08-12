@@ -10,14 +10,22 @@ import useUiStore from "@/store/ui";
 import { cn } from "@/lib/utils";
 import { genders } from "@/utils/consts";
 import useCartStore from "@/store/cart";
+import { useEffect, useState } from "react";
+import { Skeleton } from "../Skeleton";
 
 const TopMenu = () => {
   const { setSidebarOpened } = useUiStore();
-  const { productsQuantity } = useCartStore();
+  const { getProductsQuantity } = useCartStore();
+  const productsQuantity = getProductsQuantity();
   const pathName = usePathname();
+  const [loading, setLoading] = useState(true);
   const currentCategory: Gender | undefined = pathName.includes("gender")
     ? (pathName.split("/").at(-1) as Gender)
     : undefined;
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
     <nav
@@ -58,17 +66,21 @@ const TopMenu = () => {
           <IoSearchOutline color="black" />
         </Link>
 
-        <Link
-          href={PATHS.cart}
-          className="relative flex items-center justify-center p-2 "
-        >
-          <IoCartOutline color="black" size={20} />
-          {productsQuantity > 0 && (
-            <span className="absolute top-0 right-0 bg-orange-500 text-white font-bold rounded-full px-1 text-xs">
-              {productsQuantity}
-            </span>
-          )}
-        </Link>
+        {loading ? (
+          <Skeleton className="w-6 h-6 p-2" />
+        ) : (
+          <Link
+            href={PATHS.cart}
+            className="relative flex items-center justify-center p-2 "
+          >
+            <IoCartOutline color="black" size={20} />
+            {productsQuantity > 0 && (
+              <span className="absolute top-0 right-0 bg-orange-500 text-white font-bold rounded-full px-1 text-xs">
+                {productsQuantity}
+              </span>
+            )}
+          </Link>
+        )}
 
         <button
           onClick={() => setSidebarOpened()}

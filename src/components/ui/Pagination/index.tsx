@@ -18,6 +18,10 @@ const Pagination = ({ totalPages }: Props) => {
     redirect(path);
   }
 
+  if (!path) {
+    return null;
+  }
+
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 

@@ -38,18 +38,21 @@ const QuantitySelector = ({ selection, setSelection, sizes }: Props) => {
     ) {
       return;
     }
-    const newSelection = { ...selection, quantity: selection.quantity + value };
+    const updatedSelection = {
+      ...selection,
+      quantity: selection.quantity + value,
+    };
     if (isCartView) {
-      handleAddCart(newSelection);
+      handleAddCart(updatedSelection);
     } else {
-      setSelection(newSelection);
+      setSelection(updatedSelection);
     }
   }
 
-  function handleAddCart(newSelection: CartProduct) {
-    addCartProduct(newSelection);
+  function handleAddCart(updatedSelection: CartProduct) {
+    addCartProduct(updatedSelection);
     getProductsQuantity();
-    setSelection(newSelection);
+    setSelection(updatedSelection);
   }
 
   return (

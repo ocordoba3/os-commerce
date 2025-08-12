@@ -1,7 +1,10 @@
 "use client";
 
 import AddToCart from "@/components/products/AddToCart";
+import { Button } from "@/components/ui/Button";
+import { Size } from "@/generated/prisma";
 import { CartProduct } from "@/interfaces/products";
+import useCartStore from "@/store/cart";
 import { PATHS } from "@/utils/paths";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +17,13 @@ interface Props {
 
 const CartProductItem = ({ product }: Props) => {
   const path = usePathname();
+  const { removeCartProduct, getProductsQuantity } = useCartStore();
   const isCartView = path === PATHS.cart;
+
+  function handleRemove() {
+    removeCartProduct(product.productId, product.size as Size);
+    getProductsQuantity();
+  }
 
   return (
     <section className="w-full grid grid-cols-1 md:grid-cols-[30%_70%] text-gray-700 bg-clip-border items-center bg-gray-50">
@@ -42,9 +51,12 @@ const CartProductItem = ({ product }: Props) => {
         <AddToCart product={product} sizes={product.allowedSizes} />
 
         {isCartView && (
-          <p className="w-full text-sm text-gray-600 underline cursor-pointer self-end h-fit">
+          <Button
+            onClick={handleRemove}
+            className="p-0 text-sm text-gray-600 underline cursor-pointer self-end h-fit bg-transparent w-fit border-none hover:bg-transparent hover:text-orange-700 shadow-none"
+          >
             Remove
-          </p>
+          </Button>
         )}
       </div>
     </section>

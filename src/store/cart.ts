@@ -1,54 +1,76 @@
-import { CartProduct } from "@/interfaces/products";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { CartProduct } from "@/interfaces/products";
+import { Size } from "@/generated/prisma";
 
-type Store = {
+type CartState = {
   products: CartProduct[];
-  productsQuantity: number;
-  addCartProduct: (product: CartProduct) => void;
-  getProductsQuantity: () => void;
 };
 
-const useCartStore = create<Store>()(
+type CartActions = {
+  addCartProduct: (product: CartProduct) => void;
+  setQuantity: (productId: string, size: Size, qty: number) => void;
+  removeCartProduct: (productId: string, size: Size) => void;
+  clear: () => void;
+  // Other functions
+  getProductsQuantity: () => number;
+  getProductsTotal: () => number;
+};
+
+const useCartStore = create<CartState & CartActions>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       products: [],
-      productsQuantity: 0,
-      getProductsQuantity: () => {
-        set((state) => ({
-          ...state,
-          productsQuantity: state.products.reduce(
-            (acc, prod) => acc + prod.quantity,
-            0
-          ),
-        }));
-      },
+
       addCartProduct: (product) =>
         set((state) => {
-          let newProducts = [];
-          const productExists = state.products.some(
-            (stateProd) =>
-              stateProd.productId === product.productId &&
-              stateProd.size === product.size
+          const i = state.products.findIndex(
+            (p) => p.productId === product.productId && p.size === product.size
           );
-          if (!productExists) {
-            newProducts = [...state.products, product];
-          } else {
-            newProducts = state.products.map((stateProd) => {
-              if (
-                stateProd.productId === product.productId &&
-                stateProd.size === product.size
-              ) {
-                return { ...stateProd, quantity: product.quantity };
-              }
-              return stateProd;
-            });
+
+          if (i === -1) {
+            return { products: [...state.products, product] };
           }
 
-          return { ...state, products: newProducts };
+          const next = state.products.slice();
+          next[i] = {
+            ...next[i],
+            quantity: product.quantity,
+          };
+          return { products: next };
         }),
+
+      setQuantity: (productId, size, qty) =>
+        set((state) => ({
+          products: state.products.map((p) =>
+            p.productId === productId && p.size === size
+              ? { ...p, quantity: Math.max(0, qty) }
+              : p
+          ),
+        })),
+
+      removeCartProduct: (productId, size) =>
+        set((state) => ({
+          products: state.products.filter(
+            (p) => !(p.productId === productId && p.size === size)
+          ),
+        })),
+
+      clear: () => set({ products: [] }),
+
+      // Other functions
+      getProductsQuantity: () =>
+        get().products.reduce((acc, p) => acc + p.quantity, 0),
+
+      getProductsTotal: () =>
+        get().products.reduce((acc, p) => acc + p.quantity * p.price, 0),
     }),
-    { name: "cart-storage" }
+    {
+      name: "cart-storage",
+      // // Keeps just the important
+      // partialize: (state) => ({ products: state.products }),
+      // version: 1,
+    }
   )
 );
 
